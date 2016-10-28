@@ -29,17 +29,13 @@ public class MainUI : MonoBehaviour {
     }
 
     private void ResetCanvasAnchors(GameObject CurrentCanvas) {
-        foreach (GameObject Canvas in m_Canvases) {
-            if (Canvas == CurrentCanvas) {
-                RectTransform canvasRect = Canvas.GetComponent<RectTransform>();
-                canvasRect.localPosition = Vector3.zero;
-                canvasRect.offsetMax = Vector2.zero;
-                canvasRect.offsetMin = Vector2.zero;
-                canvasRect.anchorMin = Vector2.zero;
-                canvasRect.anchorMax = Vector2.one;
-                canvasRect.pivot = new Vector2(0.5f, 0.5f);
-            }
-        }
+        RectTransform canvasRect = CurrentCanvas.GetComponent<RectTransform>();
+        canvasRect.localPosition = Vector3.zero;
+        canvasRect.offsetMax = Vector2.zero;
+        canvasRect.offsetMin = Vector2.zero;
+        canvasRect.anchorMin = Vector2.zero;
+        canvasRect.anchorMax = Vector2.one;
+        canvasRect.pivot = new Vector2(0.5f, 0.5f);
     }
 
     public void SwitchCanvas(GameObject NextCanvas) {
