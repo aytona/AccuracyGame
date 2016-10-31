@@ -13,7 +13,7 @@ public class MainUI : MonoBehaviour {
     private GameObject m_GameCanvas;
 
     private List<GameObject> m_Canvases;
-    private GameObject m_PreviousCanvas;
+    private Stack<GameObject> m_PreviousCanvas;
 
     void Start() {
         InitializeCanvas();
@@ -26,6 +26,8 @@ public class MainUI : MonoBehaviour {
         m_Canvases.Add(m_InstructionCanvas);
         m_Canvases.Add(m_CreditsCanvas);
         m_Canvases.Add(m_GameCanvas);
+
+        m_PreviousCanvas = new Stack<GameObject>();
     }
 
     private void ResetCanvasAnchors(GameObject CurrentCanvas) {
@@ -49,8 +51,13 @@ public class MainUI : MonoBehaviour {
         }
     }
 
+    public void ReturnToPrevious() {
+        SwitchCanvas(m_PreviousCanvas.Peek());
+        m_PreviousCanvas.Pop();
+    }
+
     public void SetPreviousCanvas(GameObject PreviousCanvas) {
-        m_PreviousCanvas = PreviousCanvas;
+        m_PreviousCanvas.Push(PreviousCanvas);
     }
 
     public void QuitApplication() {
