@@ -11,13 +11,29 @@ public class MainUI : MonoBehaviour {
     private GameObject m_CreditsCanvas;
     [SerializeField]
     private GameObject m_GameCanvas;
+    [SerializeField]
+    private GameObject m_Game;
 
     private List<GameObject> m_Canvases;
     private Stack<GameObject> m_PreviousCanvas;
+    private bool b_GameToggle;
 
     void Start() {
         InitializeCanvas();
         SwitchCanvas(m_MenuCanvas);
+        b_GameToggle = false;
+    }
+
+    void Update() {
+        if (Input.GetKeyDown(KeyCode.Escape)) {
+            SwitchCanvas(m_MenuCanvas);
+            ToggleGame();
+        }
+    }
+
+    public void ToggleGame() {
+        b_GameToggle = !b_GameToggle;
+        m_Game.SetActive(b_GameToggle);
     }
 
     private void InitializeCanvas() {
