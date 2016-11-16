@@ -28,7 +28,7 @@ public class CollisionHandler : MonoBehaviour {
 
     void OnTriggerEnter(Collider other) {
         if (other.gameObject.tag == "initTarget") {
-            if (m_slider.value >= 0.6f || m_slider.value <= 0.7f) {
+            if (m_slider.value >= 0.6f && m_slider.value <= 0.7f) {
                 Launch();
             } else {
                 GameObject trigger = GameObject.FindGameObjectWithTag("launchTarget");
@@ -62,6 +62,7 @@ public class CollisionHandler : MonoBehaviour {
         launchTrigger.SetActive(false);
         initTrigger.SetActive(false);
         m_ramp.SetActive(true);
+        m_slider.gameObject.SetActive(false);
     }
 
     private IEnumerator LevelFinish() {
