@@ -1,8 +1,12 @@
 ﻿using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class CollisionHandler : MonoBehaviour {
+
+    public Slider m_slider;
+    public GameObject m_ramp;
 
     private Vector3 m_initPosition;
     private Rigidbody m_rb;
@@ -24,7 +28,12 @@ public class CollisionHandler : MonoBehaviour {
 
     void OnTriggerEnter(Collider other) {
         if (other.gameObject.tag == "initTarget") {
-            Launch();
+            if (m_slider.value >= 0.6f || m_slider.value <= 0.7f) {
+                Launch();
+            } else {
+                GameObject trigger = GameObject.FindGameObjectWithTag("launchTarget");
+                trigger.GetComponent<BoxCollider>().enabled = false;
+            }
         }
         if (other.gameObject.tag == "launchTarget") {
             StartCoroutine(LevelTransition());
@@ -48,7 +57,11 @@ public class CollisionHandler : MonoBehaviour {
         yield return new WaitForSeconds(m_soundManager.m_launchSFX.length + 1f);
         transform.position = m_initPosition;
         m_rb.isKinematic = false;
-
+        GameObject launchTrigger = GameObject.FindGameObjectWithTag("launchTarget");
+        GameObject initTrigger = GameObject.FindGameObjectWithTag("initTarget");
+        launchTrigger.SetActive(false);
+        initTrigger.SetActive(false);
+        m_ramp.SetActive(true);
     }
 
     private IEnumerator LevelFinish() {

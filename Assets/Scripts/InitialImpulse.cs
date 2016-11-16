@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 
 public class InitialImpulse : MonoBehaviour {
@@ -9,6 +10,8 @@ public class InitialImpulse : MonoBehaviour {
     public Vector3 m_bufferDistance;
     [Tooltip("Reference Object Transform")]
     public Transform m_refTransform;
+
+    public Slider m_slider;
 
     // Reference rigibbody
     private Rigidbody m_rb;
@@ -31,7 +34,7 @@ public class InitialImpulse : MonoBehaviour {
     }
 
     private void Launch() {
-        m_force.x = (m_desiredDisplacement.x / m_time) * m_rb.mass;
+        m_force.x = (m_desiredDisplacement.x / m_time) * m_rb.mass * (m_slider.value + 1f);
         m_rb.AddForce(m_force / Time.fixedDeltaTime);
         m_force = Vector3.zero;
     }
