@@ -1,4 +1,6 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 using System.Collections.Generic;
 
 public class MainUI : MonoBehaviour {
@@ -13,6 +15,10 @@ public class MainUI : MonoBehaviour {
     private GameObject m_GameCanvas;
     [SerializeField]
     private GameObject m_Game;
+    [SerializeField]
+
+    public GameObject m_rampPivot;
+    public GameObject m_ramp;
 
     private List<GameObject> m_Canvases;
     private Stack<GameObject> m_PreviousCanvas;
@@ -78,5 +84,20 @@ public class MainUI : MonoBehaviour {
 
     public void QuitApplication() {
         Application.Quit();
+    }
+
+    public void RestartScene()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
+    public void PivotUp()
+    {
+        m_ramp.transform.RotateAround(m_rampPivot.transform.position, Vector3.forward, 10f);
+    }
+
+    public void PivotDown()
+    {
+        m_ramp.transform.RotateAround(m_rampPivot.transform.position, Vector3.forward, -10f);
     }
 }

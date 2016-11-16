@@ -7,12 +7,14 @@ public class CollisionHandler : MonoBehaviour {
 
     public Slider m_slider;
     public GameObject m_ramp;
+    public GameObject m_pivotButtons;
 
     private Vector3 m_initPosition;
     private Rigidbody m_rb;
 
     private InitialImpulse m_initImpulse;
     private LaunchImpulse m_launchImpulse;
+    private FrictionSimulation m_frictionSim;
 
     private SoundManager m_soundManager;
 
@@ -22,8 +24,11 @@ public class CollisionHandler : MonoBehaviour {
 
         m_initImpulse = GetComponent<InitialImpulse>();
         m_launchImpulse = GetComponent<LaunchImpulse>();
+        m_frictionSim = GetComponent<FrictionSimulation>();
 
         m_soundManager = FindObjectOfType<SoundManager>();
+
+        m_frictionSim.enabled = false;
     }
 
     void OnTriggerEnter(Collider other) {
@@ -63,11 +68,14 @@ public class CollisionHandler : MonoBehaviour {
         initTrigger.SetActive(false);
         m_ramp.SetActive(true);
         m_slider.gameObject.SetActive(false);
+        m_pivotButtons.SetActive(true);
+        m_frictionSim.enabled = true;
     }
 
     private IEnumerator LevelFinish() {
         m_soundManager.PlayTargetSFX();
         m_rb.velocity = Vector3.zero;
+        m_rb.isKinematic = true;
         yield return new WaitForSeconds(m_soundManager.m_targetSFX.length + 1f);
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
